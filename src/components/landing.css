@@ -1,0 +1,14 @@
+.button-color {
+   
+    border: none;
+    width: 200px;
+    
+
+    
+}
+.navbar-bg {
+    background-image: url(../assets/images/generated.jpg);
+    height: 400px;
+    background-size: cover;
+
+}
