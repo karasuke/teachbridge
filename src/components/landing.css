@@ -12,3 +12,18 @@
     background-size: cover;
 
 }
+
+@media (max-width: 768px) {
+    .navbar-bg {
+        height: 100px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .button-color {
+        width: 120px;
+       
+    }
+  
+}
