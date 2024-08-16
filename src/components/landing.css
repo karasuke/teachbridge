@@ -1,17 +1,9 @@
 .button-color {
-   
     border: none;
-    width: 200px;
-    
-
+    width: 150px;
     
 }
-.navbar-bg {
-    background-image: url(../assets/images/generated.jpg);
-    height: 400px;
-    background-size: cover;
 
-}
 
 @media (max-width: 768px) {
     .navbar-bg {
@@ -27,3 +19,24 @@
     }
   
 }
+
+.text-gray {
+    color: #42445e;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #343a40; /* Ajusta el color según tu diseño */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .absolute-image {
+    position: absolute;
+    right: 400px;
+    top: 1000px;
+    bottom: 0;
+    width: 400px; /* Asegúrate de mantener el tamaño de la imagen */
+  }

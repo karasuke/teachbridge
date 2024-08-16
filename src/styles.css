@@ -1091,6 +1091,18 @@
   .bg-tiktok:hover {
     background-color: #57a6aa;
   }
+
+  .bg-nav-buttons {
+    background-color: white !important;
+    cursor: pointer !important;
+    padding: 5px; /* Añadir padding aquí para que sea consistente */
+    border: 1px solid transparent; /* Añadir borde transparente */
+  }
+  
+  .bg-nav-buttons:hover {
+    border: 1px solid black; /* Cambiar el borde a negro al pasar el ratón */
+    border-radius: 10px;
+  }
   
   /** FIN BACKGROUNDS */
   
