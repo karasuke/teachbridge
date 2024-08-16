@@ -32,6 +32,7 @@ export const AppRoutes = () => {
               <Route path="users/edit/:id" element={<><UserNav /><RegisterPage /></>} />
             </>
           )}
+          
         </>
       ) : (
         <Route path="*" element={<Navigate to={RoutesDirections.MAIN_ROUTE} />} />
