@@ -1,4 +1,4 @@
-import { AppRoutes } from "./AppRoutes";
+import { AppRoutes } from "./Routes/AppRoutes";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 
