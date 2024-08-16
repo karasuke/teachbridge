@@ -244,22 +244,19 @@ export const LandingPage = () => {
             </Col>
           </Row>
           <Row className="g-0 mb-5 pb-5 ">
-            <Col
-              lg={12}
-              className="d-flex p-0 px-5 mx-4 justify-content-start align-items-center "
-            >
-              <Col lg={10}>
+            
+              <Col lg={10} className="px-5 mx-4">
                 <Col className="mb-2 px-5 mx-4">
                   <span className={`${isMobile ? "h5" : "h1"} text-primary-1 `}>
                     {"Nuestro Servicio"}
                   </span>
                 </Col>
-                <Col className="mb-5 px-5 mx-4" style={{ position: "relative" }}>
+                <Col className="mb-5 px-5 mx-4" >
                   <span className="text-secondary-1 fw-bold h3">
                     Aprendizaje a tu medida
                   </span>
                 </Col>
-                <Col
+                <Col lg={11}
                   className="bg-tiktok rounded rounded-4 p-5 mx-5 d-flex flex-row align-items-center"
                   
                 >
@@ -278,7 +275,7 @@ export const LandingPage = () => {
                   </Col>
                 </Col>
               </Col>
-            </Col>
+        
           </Row>
           <Row className="g-0 pt-5 my-5">
             <Col className="text-center p-0 footer">
