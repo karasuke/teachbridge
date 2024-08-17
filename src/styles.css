@@ -362,6 +362,7 @@
     cursor: pointer !important;
   }
   
+  
   .btn-widget-light,
   .btn-widget-dark {
     width: 30px;
@@ -1093,7 +1094,7 @@
   }
 
   .bg-nav-buttons {
-    background-color: white !important;
+    background-color: transparent !important;
     cursor: pointer !important;
     padding: 5px; /* Añadir padding aquí para que sea consistente */
     border: 1px solid transparent; /* Añadir borde transparente */

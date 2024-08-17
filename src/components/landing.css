@@ -32,6 +32,12 @@
     text-align: center;
     padding: 10px 0;
   }
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 
   .absolute-image {
     position: absolute;
@@ -39,4 +45,8 @@
     top: 1000px;
     bottom: 0;
     width: 400px; /* Asegúrate de mantener el tamaño de la imagen */
+  }
+
+  .bg-secondary-2:hover {
+    background-color: #b2b8c0 !important;
   }
