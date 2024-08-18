@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
+import { RoutesDirections } from "../../data/libraries/Routes";
 
 export const LoginPage = () => {
 
@@ -27,9 +28,11 @@ export const LoginPage = () => {
     handlerLogin({ username, password });
     setLoginForm(initialLoginForm);
   };
-
+  const redirectToHome = () => {
+    window.location.href = RoutesDirections.MAIN_ROUTE;
+  };
   return (
-    <>
+   
       <div className="modal" tabIndex="-1" style={{ display: "block" }}>
         <div className="modal-dialog">
           <div className="modal-content">
@@ -56,14 +59,19 @@ export const LoginPage = () => {
               </div>
 
               <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" onClick={redirectToHome}>
+                Home
+              </button>
                 <button type="submit" className="btn btn-primary">
                   Login
                 </button>
+               
               </div>
             </form>
+            
           </div>
         </div>
       </div>
-    </>
+    
   );
 };

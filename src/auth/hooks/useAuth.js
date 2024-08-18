@@ -3,6 +3,7 @@ import { userLogin } from "../services/authService";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { onLogin, onlogout } from "../../store/slices/auth/authSlice";
+import { RoutesDirections } from "../../data/libraries/Routes";
 
 export const useAuth = () => {
 
@@ -65,7 +66,7 @@ export const useAuth = () => {
     sessionStorage.removeItem("login");
     sessionStorage.removeItem("token");
     sessionStorage.clear();
-    navigate("/login");
+    navigate(RoutesDirections.MAIN_ROUTE);
   };
 
   return { login: { user, isAdmin, isAuth }, handlerLogin, handlerLogout };

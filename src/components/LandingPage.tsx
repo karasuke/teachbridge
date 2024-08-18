@@ -104,7 +104,7 @@ export const LandingPage = () => {
                 </Col>
 
                 <Col className="mt-4 text-center text-lg-start">
-                  <Button className={`bg-primary-1 px-5`}>
+                  <Button className={`bg-primary-1 px-5 `}>
                     {INFO_CONTAINER_BUTTON_TEXT}
                   </Button>
                 </Col>
@@ -155,7 +155,7 @@ export const LandingPage = () => {
                         className="d-inline-block align-text-top "
                       />
                       <Col>
-                        <span className="h5">{TITLE_TEXT}</span>
+                        <span className="text-secondary-2 h5">{TITLE_TEXT}</span>
                       </Col>
                     </a>
                   </Col>
@@ -204,9 +204,9 @@ export const LandingPage = () => {
                 </Col>
                 <Col className="mt-4 text-center text-lg-start">
                   <Button
-                    className={`bg-secondary-2 shadow border-0 rounded rounded-3 px-2 button-hover-effect`}
+                    className={`bg-secondary-2  shadow border-0 rounded rounded-3 px-2 button-hover-effect`}
                   >
-                    {INFO_CONTAINER_BUTTON_TEXT}
+                   <span >{INFO_CONTAINER_BUTTON_TEXT}</span> 
                   </Button>
                 </Col>
               </Col>
