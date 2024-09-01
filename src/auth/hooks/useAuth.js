@@ -26,7 +26,7 @@ export const useAuth = () => {
 
       //Este dispatch hace que se ejecute el reducer de authSlice.js y se guarde el usuario en el estado de redux
       dispatch(onLogin({ user, isAdmin: claims.isAdmin }));
-
+      
 
       //Se guarda el usuario en el session storage
       sessionStorage.setItem("login", JSON.stringify({ isAuth: true, isAdmin: claims.isAdmin, user }));

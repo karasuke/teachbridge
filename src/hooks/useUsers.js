@@ -1,6 +1,6 @@
 
 import Swal from 'sweetalert2';
-import { findAllPages, remove, save, update } from '../services/userService';
+import { findAllPages, remove, save, update, saveComment, getComments } from '../services/userService';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -92,6 +92,39 @@ export const useUsers = () => {
       }
     });
   };
+
+  const handlerAddComment = async (comment) => {
+    try {
+      await saveComment(comment);
+      Swal.fire({
+        icon: 'success',
+        title: 'Comentario enviado',
+        text: 'Tu comentario ha sido enviado con éxito',
+      });
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        dispatch(loadingError(error.response.data));
+      } else if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        handlerLogout();
+      } else {
+        throw error;
+      }
+    }
+  };
+
+  const handlerGetComments = async () => {
+    try {
+      const comments = await getComments();
+      return comments.data;
+    } catch (error) {
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        handlerLogout();
+      } else {
+        throw error;
+      }
+    }
+  };
+
   //user necesita esparcirse porque es un array de objetos y no un objeto solo
   const handlerUserSelectedForm = (user) => {
     dispatch(onUserSelectedForm(user));
@@ -117,8 +150,10 @@ export const useUsers = () => {
     handlerAddUser,
     handlerDeteteUser,
     handlerUserSelectedForm,
+    handlerGetComments,
     handlerOpenForm,
     handlerCloseForm,
+    handlerAddComment,
     getUsers,
   };
 };

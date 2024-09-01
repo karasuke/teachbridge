@@ -1643,6 +1643,39 @@
     background-size: contain;
     background-repeat: no-repeat;
   }
+
+  .banner-classes-image {
+    background-color: var(--ilis-secondary-3);
+    background-image: url('./assets/images/back.png');
+    background-blend-mode: overlay; /* Puedes cambiar 'overlay' por otros modos de mezcla como 'multiply', 'screen', etc. */
+    background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
+    background-size:cover; /* Ajusta el tamaño de la imagen para que cubra todo el contenedor */
+    background-position: center; /* Centra la imagen de fondo */
+}
+
+.valoracion {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.valoracion input {
+  position: absolute;
+  top: -100px;
+}
+
+
+.valoracion label {
+  float: right;
+  color: #c1b8b8;
+  font-size: 30px; 
+}
+
+.valoracion label:hover,
+.valoracion label:hover ~ label,
+.valoracion input:checked ~ label {
+  color: #a1a112;
+}
   
   /** FIN DIMENSIONES IMAGENES **/
   

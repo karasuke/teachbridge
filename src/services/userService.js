@@ -1,7 +1,7 @@
 import { usersApi } from "../apis/usersApi";
 
 
-
+//api url esta vacio porque la url base ya se encuentra en el archivo usersApi.js
 const API_URL = '';
 
 
@@ -66,6 +66,25 @@ export const remove = async (id) => {
 
 }
 
+//agrega un comentario a la base de datos y devuelve una promesa con el comentario guardado
+export const saveComment = async ({ user_name, user_comment }) => {
+    try {
+        const response = await usersApi.post(`${API_URL}/comments`, { user_name, user_comment });
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getComments = async () => {
+    try {
+        const response = await usersApi.get(`${API_URL}/get/comments`);
+        return response;
+    } catch (error) {
+        console.error(error);
+    }
+    return null;
+};
 
 
 

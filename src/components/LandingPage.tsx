@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Container, Image, Row, Button, Navbar } from "react-bootstrap";
 import "./landing.css";
 import { RoutesDirections } from "../data/libraries/Routes";
@@ -9,8 +9,19 @@ export const LandingPage = () => {
   const navigate = useNavigate(); // Usa el hook useNavigate
 
   const handleAdminClick = () => {
-    navigate(RoutesDirections.LOGIN_ROUTE); // Navega al login
+    setIsClicked(true);
+    setTimeout(() => {
+      navigate(RoutesDirections.LOGIN_ROUTE); // Navega al login
+    }, 150); 
   };
+
+  const handleRedirectClasses = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      navigate(RoutesDirections.CLASSES_ROUTE); // Navega al login
+    }, 150); 
+  }
+
 
   /** Hook que contiene las dimensiones de la pantalla y maneja los componentes de acuerdo al resultado obtenido */
   const { width, maxLargeWidth }: ScreenSize = useScreenSize();
@@ -34,7 +45,7 @@ export const LandingPage = () => {
   const SERVICE_DETAILS_TEXT =
     "¿Quieres aprender de forma divertida y efectiva? ¡Explora nuestros cursos gratis y descubre nuestro contenido educativo personalizado para alcanzar tus metas educativas!";
   const COPYRIGHT_TEXT = " © 2024 Copyright: TeachBridge";
-
+  const [isClicked, setIsClicked] = useState(false);
   return (
     <Container fluid className="p-0">
       {isMobile ? (
@@ -63,16 +74,17 @@ export const LandingPage = () => {
                     className="d-flex justify-content-around px-5 my-4"
                   >
                     <Button
-                      className="button-color  "
+                      className={`button-color ${isClicked ? 'active' : ''} `}
                       variant="dark"
                       type="submit"
+                      onClick={handleRedirectClasses}
                     >
                       {CLASES_TEXT}
                     </Button>
                     
 
                     <Button
-                      className="button-color  "
+                      className={`button-color ${isClicked ? 'active' : ''} `}
                       type="submit"
                       variant="dark"
                       onClick={handleAdminClick}
@@ -163,11 +175,12 @@ export const LandingPage = () => {
                     <button
                       className="bg-nav-buttons text-secondary-1  p-large button-color my-2 fw-bold "
                       type="submit"
+                      onClick={handleRedirectClasses}
                     >
                       {CLASES_TEXT}
                     </button>
                     <button
-                      className="bg-nav-buttons text-secondary-1  p-large button-color my-2 fw-bold "
+                      className={`bg-nav-buttons text-secondary-1  p-large button-color my-2 fw-bold ${isClicked ? 'active' : ''}`}
                       type="submit"
                     >
                       {CREATOR_TEXT}

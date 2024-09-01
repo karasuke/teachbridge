@@ -1,9 +1,13 @@
 .button-color {
-    border: none;
-    width: 150px;
-    
+  border: none;
+  width: 150px;
+  transition: transform 0.5s ease, background-color 0.5s ease; /* Ajusta la duración de la transición a 0.5 segundos */
 }
 
+.button-color.active {
+  transform: scale(0.95); /* Escala el botón ligeramente cuando se presiona */
+  background-color: #ddd; /* Cambia el color de fondo cuando se presiona */
+}
 
 @media (max-width: 768px) {
     .navbar-bg {
