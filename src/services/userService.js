@@ -66,16 +66,16 @@ export const remove = async (id) => {
 
 }
 
-//agrega un comentario a la base de datos y devuelve una promesa con el comentario guardado
-export const saveComment = async ({ user_name, user_comment }) => {
+// Agrega un comentario a la base de datos y devuelve una promesa con el comentario guardado
+// Agrega un comentario a la base de datos y devuelve una promesa con el comentario guardado
+export const saveComment = async ({ userName, userComment }) => {
     try {
-        const response = await usersApi.post(`${API_URL}/comments`, { user_name, user_comment });
+        const response = await usersApi.post(`${API_URL}/create/comments`, { userName, userComment });
         return response;
     } catch (error) {
         throw error;
     }
 };
-
 export const getComments = async () => {
     try {
         const response = await usersApi.get(`${API_URL}/get/comments`);
@@ -85,6 +85,8 @@ export const getComments = async () => {
     }
     return null;
 };
+
+
 
 
 

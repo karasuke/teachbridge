@@ -11,42 +11,84 @@ import {
 import { RoutesDirections } from "../data/libraries/Routes";
 import { useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
-import { IComment } from "../interfaces/IComment";
+import { IComment, ISaveComments } from "../interfaces/IComment";
 
+export const Classes = () => {
+  //navigate es una función que permite navegar a una ruta específica
+  const navigate = useNavigate();
+  //isClicked es un estado para efecto de transición de los botones de accion
+  const [isClicked, setIsClicked] = useState(false);
 
-export const Classes = ()  => {
-  const navigate = useNavigate(); // Usa el hook useNavigate
+  //comments es un estado que almacena los comentarios
+  const [comments, setComments] = useState<IComment[]>([]);
 
+  //handlerGetComments y handlerAddComment son funciones que permiten obtener y agregar comentarios
+  const { handlerGetComments, handlerAddComment } = useUsers();
+
+  //userForm es un estado que almacena el nombre y comentario del usuario
+  const [userForm, setUserForm] = useState<ISaveComments>({
+    userName: "",
+    userComment: "",
+  });
+
+  //handleAdminClick es una función que permite navegar a la ruta de administrador
   const handleAdminClick = () => {
     setIsClicked(true);
     setTimeout(() => {
       navigate(RoutesDirections.LOGIN_ROUTE); // Navega al login
     }, 150); // Ajusta el tiempo de espera para que coincida con la duración de la transición
   };
-  const [isClicked, setIsClicked] = useState(false);
-  const { handlerGetComments } = useUsers()
 
- 
-  
-  const [comments, setComments] = useState<IComment[]>([]);
-  
+  //onInputChange es una función que permite actualizar el estado userForm
+  const onInputChange = ({ target }) => {
+    const { name, value } = target;
+    setUserForm((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  //handleFormSubmit es una función que permite enviar el formulario
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // Desestructurar userForm para obtener los valores directamente
+    const { userName, userComment } = userForm;
+
+    // Llamar a handlerAddComment con los valores desestructurados
+    await handlerAddComment(userName, userComment);
+
+    // Limpiar el formulario después de enviar los datos
+    setUserForm({
+      userName: "",
+      userComment: "",
+    });
+
+    // Volver a cargar los comentarios después de enviar los datos
+    const commentsData = await handlerGetComments();
+    setComments(commentsData);
+  };
+
+  //actualiza los comentarios al cargar la página por primera vez
   useEffect(() => {
     const fetchComments = async () => {
       const commentsData = await handlerGetComments();
-      setComments(commentsData); // Actualiza el estado con los comentarios recibidos
+      setComments(commentsData);
     };
 
     fetchComments();
   }, []);
-  
-  
+
+  //CONSTANTES DE TEXTO
   const videoSrc = "/src/assets/videos/teach.mp4";
   const CLASES_TEXT = "Clases";
   const CREATOR_TEXT = "Creadores";
   const ADMINISTRATOR_TEXT = "Administrador";
   const TITLE_TEXT = "TeachBridge";
   const COPYRIGHT_TEXT = " © 2024 Copyright: TeachBridge";
-  const SUBTITLE_VIDEO = "El video comienza con una introducción breve sobre la misión del proyecto: crear un entorno digital accesible y personalizado donde los maestros puedan diseñar lecciones interactivas y gestionar el progreso de los estudiantes en tiempo real. A continuación, mostramos la interfaz de usuario intuitiva de EduPlay, destacando la facilidad con la que los educadores pueden crear contenido educativo a través de herramientas integradas como grabaciones de lecciones y rutas de estudio personalizadas.";
+  const SUBTITLE_VIDEO =
+    "El video comienza con una introducción breve sobre la misión del proyecto: crear un entorno digital accesible y personalizado donde los maestros puedan diseñar lecciones interactivas y gestionar el progreso de los estudiantes en tiempo real. A continuación, mostramos la interfaz de usuario intuitiva de EduPlay, destacando la facilidad con la que los educadores pueden crear contenido educativo a través de herramientas integradas como grabaciones de lecciones y rutas de estudio personalizadas.";
+
+  //RENDERIZADO DEL COMPONENTE PRINCIPAL
   return (
     <Container fluid className="p-0 ">
       <Row className="d-flex flex-column g-0 my-3 ">
@@ -69,9 +111,9 @@ export const Classes = ()  => {
               </Col>
               <Col className="d-flex justify-content-end px-5 ">
                 <button
-                  className={`bg-nav-buttons text-secondary-1 border-0 p-large button-color my-2 fw-bold ${isClicked ? 'active' : ''}`}
-                
-                  
+                  className={`bg-nav-buttons text-secondary-1 border-0 p-large button-color my-2 fw-bold ${
+                    isClicked ? "active" : ""
+                  }`}
                 >
                   {CLASES_TEXT}
                 </button>
@@ -102,9 +144,10 @@ export const Classes = ()  => {
         <Col lg={12} className=" d-flex justify-content-center my-4">
           <Col lg={7} className="">
             <Col className="card mb-5">
-              <Col className="card-header text-primary-3 h2  text-center">Introducción al proyecto</Col>
+              <Col className="card-header text-primary-3 h2  text-center">
+                Introducción al proyecto
+              </Col>
               <Col className="card-body">
-                
                 <video width="1000" height="500" controls>
                   <source src={videoSrc} type="video/mp4" />
                 </video>
@@ -112,41 +155,48 @@ export const Classes = ()  => {
               <div className="card-footer text-muted">{SUBTITLE_VIDEO}</div>
             </Col>
             <Col className="border px-4 py-4 bg-primary-5">
-            
-            <Form className="">
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label className="text-secondary-2">Nombre</Form.Label>
-                <Form.Control
-                  className="text-secondary-2"
-                  type="name"
-                  placeholder="Ingrese su nombre"
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlTextarea1"
-              >
-                <Form.Label className="text-secondary-2">Comentario</Form.Label>
-                <Form.Control
-                  className="text-secondary-2"
-                  as="textarea"
-                  rows={3}
-                  placeholder="Ingrese comentario"
-                />
-              </Form.Group>
-              <Button
-                className="bg-primary-1 border-0 text-primary-5"
-                type="submit"
-              >
-                Enviar comentario
-              </Button>
-            </Form>
+              <Form onSubmit={handleFormSubmit}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                >
+                  <Form.Label className="text-secondary-2">Nombre</Form.Label>
+                  <Form.Control
+                    className="text-secondary-2"
+                    type="text"
+                    name="userName"
+                    placeholder="Ingrese su nombre"
+                    value={userForm.userName}
+                    onChange={onInputChange}
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
+                  <Form.Label className="text-secondary-2">
+                    Comentario
+                  </Form.Label>
+                  <Form.Control
+                    className="text-secondary-2"
+                    as="textarea"
+                    name="userComment"
+                    rows={3}
+                    placeholder="Ingrese comentario"
+                    value={userForm.userComment}
+                    onChange={onInputChange}
+                  />
+                </Form.Group>
+                <Button
+                  className="bg-primary-1 border-0 text-primary-5"
+                  type="submit"
+                >
+                  Enviar comentario
+                </Button>
+              </Form>
             </Col>
             <Col>
-              <Col className="valoracion " >
+              <Col className="valoracion ">
                 <input id="radio1" type="radio" name="estrellas" value="5" />
                 <label htmlFor="radio1">★</label>
                 <input id="radio2" type="radio" name="estrellas" value="4" />
@@ -160,15 +210,19 @@ export const Classes = ()  => {
               </Col>
             </Col>
 
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-        {comments.map((comment) => (
-          <div key={comment.id} style={{ marginBottom: '10px' }}>
-            <p><strong>{comment.userName}</strong></p>
-            <p>{comment.userComment}</p>
-            <p><small>{comment.userDate}</small></p>
-          </div>
-        ))}
-      </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {comments.map((comment) => (
+                <div key={comment.id} style={{ marginBottom: "10px" }}>
+                  <p>
+                    <strong>{comment.userName}</strong>
+                  </p>
+                  <p>{comment.userComment}</p>
+                  <p>
+                    <small>{comment.userDate}</small>
+                  </p>
+                </div>
+              ))}
+            </div>
           </Col>
         </Col>
       </Row>

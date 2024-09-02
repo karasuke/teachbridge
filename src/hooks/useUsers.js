@@ -93,24 +93,20 @@ export const useUsers = () => {
     });
   };
 
-  const handlerAddComment = async (comment) => {
+  const handlerAddComment = async (userName, userComment) => {
     try {
-      await saveComment(comment);
-      Swal.fire({
-        icon: 'success',
-        title: 'Comentario enviado',
-        text: 'Tu comentario ha sido enviado con éxito',
-      });
+        await saveComment({ userName, userComment });
+        // Eliminada la alerta de Swal
     } catch (error) {
-      if (error.response && error.response.status === 400) {
-        dispatch(loadingError(error.response.data));
-      } else if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-        handlerLogout();
-      } else {
-        throw error;
-      }
+        if (error.response && error.response.status === 400) {
+            dispatch(loadingError(error.response.data));
+        } else if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+            // Manejo de errores 401 y 403
+        } else {
+            throw error;
+        }
     }
-  };
+};
 
   const handlerGetComments = async () => {
     try {

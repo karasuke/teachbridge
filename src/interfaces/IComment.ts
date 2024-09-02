@@ -7,4 +7,10 @@ export interface IComment {
     userDate: string;
     
     }
-    
+
+export interface ISaveComments {
+    userName: string;
+    userComment: string;
+   
+}
+
