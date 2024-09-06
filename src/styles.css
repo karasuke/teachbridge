@@ -21,7 +21,23 @@
 }
 
 
-
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%; /* 16/9 ratio */
+  padding-top: 30px; /* IE6 workaround*/
+  height: 0;
+  overflow: hidden;
+  }
+  
+  .video-responsive iframe,
+  .video-responsive object,
+  .video-responsive embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 30%;
+  }
 @keyframes fadeIn {
     0% {
         opacity: 0
@@ -1652,6 +1668,16 @@
     background-size:cover; /* Ajusta el tamaño de la imagen para que cubra todo el contenedor */
     background-position: center; /* Centra la imagen de fondo */
 }
+.banner-creators-image {
+    background-color: var(--ilis-secondary-3);
+    background-image: url('./assets/images/banner-creators.jpg');
+    background-blend-mode: overlay; /* Puedes cambiar 'overlay' por otros modos de mezcla como 'multiply', 'screen', etc. */
+    background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
+    background-size:cover; /* Ajusta el tamaño de la imagen para que cubra todo el contenedor */
+    background-position: center; /* Centra la imagen de fondo */
+}
+
+
 
 .valoracion {
   position: relative;
@@ -1664,7 +1690,46 @@
   top: -100px;
 }
 
+.file {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background-color: var(--ilis-primary-4)
+}
 
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.file-input-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Arial', sans-serif;
+}
+
+.file-input-button:hover {
+  background-color: #0056b3;
+}
 .valoracion label {
   float: right;
   color: #c1b8b8;

@@ -7,6 +7,7 @@ import { LoginPage } from "../auth/pages/LoginPage";
 import { UsersPage } from "../pages/UsersPage";
 import { UserNav } from "../components/layout/UserNav";
 import { Classes } from "../pages/Classes";
+import { Creators } from "../pages/Creators";
 
 /**
  * Componente que define las rutas de la aplicación.
@@ -24,6 +25,8 @@ export const AppRoutes = () => {
       <Route path={RoutesDirections.LOGIN_ROUTE} element={<LoginPage />} />
       <Route path={RoutesDirections.MAIN_ROUTE} element={<LandingPage />} />
       <Route path={RoutesDirections.CLASSES_ROUTE} element={<Classes />} />
+      <Route path={RoutesDirections.CREATORS_ROUTE} element={<Creators />} />
+
 
       {login?.isAuth ? (
         <>

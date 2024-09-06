@@ -1,4 +1,5 @@
-import { usersApi } from "../apis/usersApi";
+import axios from "axios";
+import { usersApi, documentApi } from "../apis/usersApi";
 
 
 //api url esta vacio porque la url base ya se encuentra en el archivo usersApi.js
@@ -66,7 +67,7 @@ export const remove = async (id) => {
 
 }
 
-// Agrega un comentario a la base de datos y devuelve una promesa con el comentario guardado
+
 // Agrega un comentario a la base de datos y devuelve una promesa con el comentario guardado
 export const saveComment = async ({ userName, userComment }) => {
     try {
@@ -86,7 +87,39 @@ export const getComments = async () => {
     return null;
 };
 
+export const uploadVideo = async (file) => {
+    try {
+        const formData = new FormData();
+        formData.append("name", file);
 
+        const response = await documentApi.post('/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
 
-
+export const getVideos = async (retries = 60, delay = 1000) => {
+    try {
+        const response = await documentApi.get();
+        if (response.data !== undefined && response.data !== null) {
+            return response.data; // Retornar solo los datos
+        } else {
+            if (retries > 0) {
+                console.log(`Retrying... Attempts left: ${retries}`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+                return getVideos(retries - 1, delay);
+            } else {
+                throw new Error("Max retries reached. Data is still undefined or null.");
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching videos:", error);
+        throw error;
+    }
+};
 

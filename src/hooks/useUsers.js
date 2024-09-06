@@ -1,6 +1,6 @@
 
 import Swal from 'sweetalert2';
-import { findAllPages, remove, save, update, saveComment, getComments } from '../services/userService';
+import { findAllPages, remove, save, update, saveComment, getComments, uploadVideo, getVideos } from '../services/userService';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -121,6 +121,33 @@ export const useUsers = () => {
     }
   };
 
+  const handlerUploadFile = async (file) => {
+    try {
+        const data = await uploadVideo(file);
+        Swal.fire({
+            icon: 'success',
+            title: 'Archivo subido con éxito',
+            text: 'El archivo se ha subido correctamente.',
+        });
+        return data;
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un error al subir el archivo.',
+        });
+        throw error;
+    }
+};
+const handleGetVideos = async () => {
+  try {
+      const videos = await getVideos();
+     
+      return videos;
+  } catch (error) {
+      console.error("Error al obtener los videos:", error);
+  }
+};
   //user necesita esparcirse porque es un array de objetos y no un objeto solo
   const handlerUserSelectedForm = (user) => {
     dispatch(onUserSelectedForm(user));
@@ -151,5 +178,7 @@ export const useUsers = () => {
     handlerCloseForm,
     handlerAddComment,
     getUsers,
+    handleGetVideos,
+    handlerUploadFile
   };
 };

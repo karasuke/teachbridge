@@ -9,7 +9,7 @@ import {
   Row,
 } from "react-bootstrap";
 import { RoutesDirections } from "../data/libraries/Routes";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUsers } from "../hooks/useUsers";
 import { IComment, ISaveComments } from "../interfaces/IComment";
 
@@ -23,13 +23,30 @@ export const Classes = () => {
   const [comments, setComments] = useState<IComment[]>([]);
 
   //handlerGetComments y handlerAddComment son funciones que permiten obtener y agregar comentarios
-  const { handlerGetComments, handlerAddComment } = useUsers();
+  const { handlerGetComments, handlerAddComment, handleGetVideos } = useUsers();
 
   //userForm es un estado que almacena el nombre y comentario del usuario
   const [userForm, setUserForm] = useState<ISaveComments>({
     userName: "",
     userComment: "",
   });
+
+  const [videos, setVideos] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      const videosData = await handleGetVideos();
+      setVideos(videosData);
+    };
+
+    fetchVideos();
+  }, []);
+
+ 
+
+  const fileId = videos[videos.length - 1]?.fileId;
+
+
 
   //handleAdminClick es una función que permite navegar a la ruta de administrador
   const handleAdminClick = () => {
@@ -68,6 +85,19 @@ export const Classes = () => {
     setComments(commentsData);
   };
 
+  const location = useLocation();
+  const isClassesRoute = location.pathname === RoutesDirections.CLASSES_ROUTE;
+
+  const handleHomeRedirect = () => {
+    if (isClassesRoute) {
+      navigate(RoutesDirections.MAIN_ROUTE);
+    }
+  };
+
+  const handleCreatorsRedirect = () => {
+    navigate(RoutesDirections.CREATORS_ROUTE);
+  };
+
   //actualiza los comentarios al cargar la página por primera vez
   useEffect(() => {
     const fetchComments = async () => {
@@ -78,6 +108,20 @@ export const Classes = () => {
     fetchComments();
   }, []);
 
+  const formatDate = (dateString) => {
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+    const date = new Date(dateString);
+    return date
+      .toLocaleString("es-ES", options as Intl.DateTimeFormatOptions)
+      .replace(",", " - ");
+  };
+
   //CONSTANTES DE TEXTO
   const videoSrc = "/src/assets/videos/teach.mp4";
   const CLASES_TEXT = "Clases";
@@ -87,7 +131,12 @@ export const Classes = () => {
   const COPYRIGHT_TEXT = " © 2024 Copyright: TeachBridge";
   const SUBTITLE_VIDEO =
     "El video comienza con una introducción breve sobre la misión del proyecto: crear un entorno digital accesible y personalizado donde los maestros puedan diseñar lecciones interactivas y gestionar el progreso de los estudiantes en tiempo real. A continuación, mostramos la interfaz de usuario intuitiva de EduPlay, destacando la facilidad con la que los educadores pueden crear contenido educativo a través de herramientas integradas como grabaciones de lecciones y rutas de estudio personalizadas.";
-
+  const MY_COURSES_TEXT = "Mis Cursos";
+  const HOME_TEXT = "Home";
+  const VIDEO_TITLE_TEXT = "Introducción al proyecto";
+  const FORM_NAME_TEXT = "Nombre";
+  const FORM_COMMENT_TEXT = "Comentario";
+  const SEND_COMMENT_TEXT = "Enviar comentario";
   //RENDERIZADO DEL COMPONENTE PRINCIPAL
   return (
     <Container fluid className="p-0 ">
@@ -111,15 +160,17 @@ export const Classes = () => {
               </Col>
               <Col className="d-flex justify-content-end px-5 ">
                 <button
-                  className={`bg-nav-buttons text-secondary-1 border-0 p-large button-color my-2 fw-bold ${
+                  className={`bg-nav-buttons text-secondary-1 p-large button-color my-2 fw-bold ${
                     isClicked ? "active" : ""
                   }`}
+                  onClick={handleHomeRedirect}
                 >
-                  {CLASES_TEXT}
+                  {isClassesRoute ? HOME_TEXT : CLASES_TEXT}
                 </button>
                 <button
                   className="bg-nav-buttons text-secondary-1  p-large button-color my-2 fw-bold "
                   type="submit"
+                  onClick={handleCreatorsRedirect}
                 >
                   {CREATOR_TEXT}
                 </button>
@@ -137,30 +188,38 @@ export const Classes = () => {
       </Row>
       <Row className="d-flex g-0">
         <Col className="d-flex banner-classes-image min-vh-25 justify-content-center align-items-center">
-          <span className="text-primary-5 fw-bold h1 ">Mis Cursos</span>
+          <span className="text-primary-5 fw-bold h1 ">{MY_COURSES_TEXT}</span>
         </Col>
       </Row>
-      <Row className="d-flex g-0 bg-secondary-5">
+      <Row className="d-flex g-0 bg-secondary-5 ">
         <Col lg={12} className=" d-flex justify-content-center my-4">
-          <Col lg={7} className="">
+          <Col lg={7}>
             <Col className="card mb-5">
               <Col className="card-header text-primary-3 h2  text-center">
-                Introducción al proyecto
+                {VIDEO_TITLE_TEXT}
               </Col>
               <Col className="card-body">
-                <video width="1000" height="500" controls>
-                  <source src={videoSrc} type="video/mp4" />
-                </video>
+                <iframe
+                  id="video-iframe"
+                  src={`https://drive.google.com/file/d/${fileId}/preview`}
+                  width="1083"
+                  height="480"
+                  title="Video Preview"
+                >
+                  Tu navegador no soporta la reproducción de video.
+                </iframe>
               </Col>
               <div className="card-footer text-muted">{SUBTITLE_VIDEO}</div>
             </Col>
-            <Col className="border px-4 py-4 bg-primary-5">
+            <Col className="border px-4 py-4 bg-primary-5 rounded">
               <Form onSubmit={handleFormSubmit}>
                 <Form.Group
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
                 >
-                  <Form.Label className="text-secondary-2">Nombre</Form.Label>
+                  <Form.Label className="text-secondary-2">
+                    {FORM_NAME_TEXT}
+                  </Form.Label>
                   <Form.Control
                     className="text-secondary-2"
                     type="text"
@@ -175,7 +234,7 @@ export const Classes = () => {
                   controlId="exampleForm.ControlTextarea1"
                 >
                   <Form.Label className="text-secondary-2">
-                    Comentario
+                    {FORM_COMMENT_TEXT}
                   </Form.Label>
                   <Form.Control
                     className="text-secondary-2"
@@ -191,7 +250,7 @@ export const Classes = () => {
                   className="bg-primary-1 border-0 text-primary-5"
                   type="submit"
                 >
-                  Enviar comentario
+                  {SEND_COMMENT_TEXT}
                 </Button>
               </Form>
             </Col>
@@ -210,19 +269,25 @@ export const Classes = () => {
               </Col>
             </Col>
 
-            <div style={{ display: "flex", flexDirection: "column" }}>
+            <Col className="d-flex flex-column ">
               {comments.map((comment) => (
-                <div key={comment.id} style={{ marginBottom: "10px" }}>
-                  <p>
-                    <strong>{comment.userName}</strong>
-                  </p>
-                  <p>{comment.userComment}</p>
-                  <p>
-                    <small>{comment.userDate}</small>
-                  </p>
-                </div>
+                <Col
+                  key={comment.id}
+                  className="border rounded px-4 py-4 bg-primary-5 my-2"
+                >
+                  <Col className="d-flex ">
+                    <p className="text-secondary-1 fw-bold pe-4">
+                      {comment.userName}
+                    </p>
+                    <p className="text-secondary-2">
+                      {formatDate(comment.userDate)}
+                    </p>
+                  </Col>
+
+                  <p className="text-primary-3 ">{comment.userComment}</p>
+                </Col>
               ))}
-            </div>
+            </Col>
           </Col>
         </Col>
       </Row>

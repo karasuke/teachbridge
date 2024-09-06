@@ -6,6 +6,13 @@ export const usersApi = axios.create({
 });
 
 
+export const documentApi = axios.create({
+    baseURL: `${import.meta.env.VITE_API_URL}/documents`,
+    withCredentials: true,
+});
+
+
+
 usersApi.interceptors.request.use(
     (config) => {
         const token = sessionStorage.getItem('token') ?? null;

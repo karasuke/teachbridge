@@ -12,16 +12,22 @@ export const LandingPage = () => {
     setIsClicked(true);
     setTimeout(() => {
       navigate(RoutesDirections.LOGIN_ROUTE); // Navega al login
-    }, 150); 
+    }, 150);
   };
 
   const handleRedirectClasses = () => {
     setIsClicked(true);
     setTimeout(() => {
       navigate(RoutesDirections.CLASSES_ROUTE); // Navega al login
-    }, 150); 
-  }
+    }, 150);
+  };
 
+  const handleRedirectCreators = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      navigate(RoutesDirections.CREATORS_ROUTE); // Navega al login
+    }, 150);
+  };
 
   /** Hook que contiene las dimensiones de la pantalla y maneja los componentes de acuerdo al resultado obtenido */
   const { width, maxLargeWidth }: ScreenSize = useScreenSize();
@@ -43,7 +49,7 @@ export const LandingPage = () => {
   const SERVICE_TITLE_TEXT = "Nuestro Servicio";
   const SERVICE_SUBTITLE_TEXT = "Aprendizaje a tu medida";
   const SERVICE_DETAILS_TEXT =
-    "¿Quieres aprender de forma divertida y efectiva? ¡Explora nuestros cursos gratis y descubre nuestro contenido educativo personalizado para alcanzar tus metas educativas!";
+    "Nuestros videos educativos ofrecen una experiencia de aprendizaje personalizada y flexible. Cada niño podrá avanzar a su propio ritmo, accediendo a las lecciones cuantas veces estime necesario.";
   const COPYRIGHT_TEXT = " © 2024 Copyright: TeachBridge";
   const [isClicked, setIsClicked] = useState(false);
   return (
@@ -74,17 +80,16 @@ export const LandingPage = () => {
                     className="d-flex justify-content-around px-5 my-4"
                   >
                     <Button
-                      className={`button-color ${isClicked ? 'active' : ''} `}
+                      className={`button-color ${isClicked ? "active" : ""} `}
                       variant="dark"
                       type="submit"
                       onClick={handleRedirectClasses}
                     >
                       {CLASES_TEXT}
                     </Button>
-                    
 
                     <Button
-                      className={`button-color ${isClicked ? 'active' : ''} `}
+                      className={`button-color ${isClicked ? "active" : ""} `}
                       type="submit"
                       variant="dark"
                       onClick={handleAdminClick}
@@ -116,7 +121,11 @@ export const LandingPage = () => {
                 </Col>
 
                 <Col className="mt-4 text-center text-lg-start">
-                  <Button className={`bg-primary-1 px-5 `}>
+                  <Button
+                    className={`bg-primary-1 px-5 `}
+                    onClick={handleRedirectClasses}
+                    type="submit"
+                  >
                     {INFO_CONTAINER_BUTTON_TEXT}
                   </Button>
                 </Col>
@@ -167,7 +176,9 @@ export const LandingPage = () => {
                         className="d-inline-block align-text-top "
                       />
                       <Col>
-                        <span className="text-secondary-2 h5">{TITLE_TEXT}</span>
+                        <span className="text-secondary-2 h5">
+                          {TITLE_TEXT}
+                        </span>
                       </Col>
                     </a>
                   </Col>
@@ -180,8 +191,11 @@ export const LandingPage = () => {
                       {CLASES_TEXT}
                     </button>
                     <button
-                      className={`bg-nav-buttons text-secondary-1  p-large button-color my-2 fw-bold ${isClicked ? 'active' : ''}`}
+                      className={`bg-nav-buttons text-secondary-1  p-large button-color my-2 fw-bold ${
+                        isClicked ? "active" : ""
+                      }`}
                       type="submit"
+                      onClick={handleRedirectCreators}
                     >
                       {CREATOR_TEXT}
                     </button>
@@ -218,8 +232,9 @@ export const LandingPage = () => {
                 <Col className="mt-4 text-center text-lg-start">
                   <Button
                     className={`bg-secondary-2  shadow border-0 rounded rounded-3 px-2 button-hover-effect`}
+                    onClick={handleRedirectClasses}
                   >
-                   <span >{INFO_CONTAINER_BUTTON_TEXT}</span> 
+                    <span>{INFO_CONTAINER_BUTTON_TEXT}</span>
                   </Button>
                 </Col>
               </Col>
@@ -310,12 +325,12 @@ export const LandingPage = () => {
             </Col>
           </Row>
 
-          <Row className="g-0 pt-5 my-5">
-            <Col className="text-center p-0 footer">
+          <Row className="g-0 pt-5 bg-primary-5 ">
+            <Col className="text-center p-0 ">
               <Col className="text-center text-white bg-secondary-2">
                 <Col className="p-4 "></Col>
 
-                <Col className="text-center p-3 bg-secondary-1">
+                <Col className="text-center bg-secondary-1">
                   <span className="p-regular">{COPYRIGHT_TEXT}</span>
                 </Col>
               </Col>
